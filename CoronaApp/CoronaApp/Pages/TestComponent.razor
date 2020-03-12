@@ -1,8 +1,20 @@
 ﻿@page  "/test/{id:int}"
 
+@using System.Timers
+
 <h3>TestComponent</h3>
-<div @onload=onLoad>@loadTime.ToString()</div>
+<div>@loadTime.ToString()</div>
 @id
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<div>@seconds</div>
+<button @onclick="e => modal1.ToggleShow()">Show modal</button>
+
+<MyModal Title="Coronatitel" @ref="modal1"></MyModal>
 
 @code {
     [Parameter]
@@ -10,8 +22,22 @@
 
     public DateTime loadTime { get; set; }
 
-    void onLoad()
+    public Timer Timer { get; set; } = new Timer(1000);
+    public int seconds { get; set; }
+
+    MyModal modal1;
+
+    protected override void OnInitialized()
     {
+        base.OnInitialized();
         loadTime = DateTime.UtcNow;
+        Timer.AutoReset = true;
+        Timer.Start();
+        Timer.Elapsed += (a, b) =>
+        {
+            ++seconds;
+            InvokeAsync(StateHasChanged).Wait();
+        //StateHasChanged();
+    };
     }
 }

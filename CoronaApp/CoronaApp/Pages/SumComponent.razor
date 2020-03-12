@@ -2,11 +2,11 @@
 
 <h3>SumComponent</h3>
 
-<input @bind=a class="form-control"/>
-<input @bind=b class="form-control"/>
+<input @bind=a @bind:event="oninput" class="form-control" />
+<input @bind=b @bind:event="oninput" class="form-control" />
 <button class="btn btn-primary" @onclick=multiply>Mal</button>
 
-<div >@(a+b)</div>
+<div>Sum: @(a + b)</div>
 <div>Product: @p</div>
 
 @code {

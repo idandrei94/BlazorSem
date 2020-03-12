@@ -1,0 +1,10 @@
+﻿@page  "/modal"
+<h3>UseModalComponent</h3>
+
+<button @onclick="e => modal1.ToggleShow()">Show modal</button>
+
+<MyModal Title="Coronatitel" @ref="modal1"></MyModal>
+
+@code {
+    MyModal modal1;
+}
