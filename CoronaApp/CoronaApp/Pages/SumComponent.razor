@@ -1,0 +1,21 @@
+﻿@page "/sum"
+
+<h3>SumComponent</h3>
+
+<input @bind=a class="form-control"/>
+<input @bind=b class="form-control"/>
+<button class="btn btn-primary" @onclick=multiply>Mal</button>
+
+<div >@(a+b)</div>
+<div>Product: @p</div>
+
+@code {
+    public int a { get; set; } = 7;
+    public int b { get; set; } = 2;
+    public int p { get; set; }
+
+    void multiply()
+    {
+        p = a * b;
+    }
+}
