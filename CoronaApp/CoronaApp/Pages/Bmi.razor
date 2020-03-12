@@ -1,0 +1,40 @@
+﻿@page "/bmi"
+@using Data
+
+<h1 class="bg-primary rounded text-white text-center">Bmi calculator</h1>
+
+
+<EditForm Model=@FormData OnValidSubmit="@ValidFormSubmitted">
+    <div class="form-group">
+        <label for="Height">Height (in cm)</label>
+        <InputNumber @bind-Value=FormData.Height class="form-control" id="Height"></InputNumber>
+    </div>
+    <div class="form-group">
+        <label for="Weight">Weight (in kg)</label>
+        <InputNumber @bind-Value=FormData.Weight class="form-control" id="Weight"></InputNumber>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Submit" />
+</EditForm>
+
+@if (bmi > 0)
+{
+    <p>
+        Your bmi is @bmi
+    </p>
+}
+
+@code {
+
+    float bmi = -1;
+    BMIData FormData = new BMIData();
+
+    private void Calculate(int h, int w)
+    {
+        bmi = (w * 10000) / (h * h);
+    }
+
+    void ValidFormSubmitted(EditContext context)
+    {
+        Calculate(FormData.Height, FormData.Weight);
+    }
+}

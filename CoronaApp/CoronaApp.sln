@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoronaApp", "CoronaApp\CoronaApp.csproj", "{F07FCDAA-7F0F-44DA-B39B-0E7B60C4696B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorClassLibrary1", "RazorClassLibrary1\RazorClassLibrary1.csproj", "{F7F75763-C490-4471-A74E-A86A806F3549}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F07FCDAA-7F0F-44DA-B39B-0E7B60C4696B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F07FCDAA-7F0F-44DA-B39B-0E7B60C4696B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F07FCDAA-7F0F-44DA-B39B-0E7B60C4696B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7F75763-C490-4471-A74E-A86A806F3549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7F75763-C490-4471-A74E-A86A806F3549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7F75763-C490-4471-A74E-A86A806F3549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7F75763-C490-4471-A74E-A86A806F3549}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
