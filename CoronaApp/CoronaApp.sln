@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoronaApp", "CoronaApp\CoronaApp.csproj", "{F07FCDAA-7F0F-44DA-B39B-0E7B60C4696B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoronaApp", "CoronaApp\CoronaApp.csproj", "{F07FCDAA-7F0F-44DA-B39B-0E7B60C4696B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorClassLibrary1", "RazorClassLibrary1\RazorClassLibrary1.csproj", "{F7F75763-C490-4471-A74E-A86A806F3549}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorClassLibrary1", "RazorClassLibrary1\RazorClassLibrary1.csproj", "{F7F75763-C490-4471-A74E-A86A806F3549}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

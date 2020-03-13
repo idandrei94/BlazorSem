@@ -1,0 +1,79 @@
+﻿@using CoronaApp.Data
+@using System.Text.Json
+
+@page "/final"
+
+@inject IJSRuntime _jsRuntime
+was
+<input @bind="neuAufgabe.Text" />
+bis wann
+<input @bind="neuAufgabe.ErledigtBis" type="datetime-local" @bind:culture='System.Globalization.CultureInfo.GetCultureInfo("de-DE")' />
+<button @onclick="neue" class="btn btn-outline-secondary">Anlegen</button>
+
+<h3>FinalTodo</h3>
+<ul class="list-group">
+    @foreach (var item in Aufgaben)
+    {
+        <li @key="item.ID" class="list-group-item">
+            @if (item.Bearbeiten)
+            {
+                <input @bind="item.Text" @onfocusout='_=>aktualisiere(item)' />
+            }
+            <input type="checkbox" @bind="item.Erledigt" @onfocusout="aktualisiere" />
+            <span style='@(item.Erledigt?"text-decoration:line-through":"")' @onclick="_=>item.Bearbeiten=true">@item.Text @item.ErledigtBis</span>
+        </li>
+    }
+</ul>
+
+@code {
+    public Aufgabe neuAufgabe { get; set; } = new Aufgabe();
+    public List<Aufgabe> Aufgaben { get; set; } = new List<Aufgabe>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var localStorage = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "todos");
+            try
+            {
+                Aufgaben.Clear();
+                foreach (var aufgabe in JsonSerializer.Deserialize<List<Aufgabe>>(localStorage))
+                {
+                    Aufgaben.Add(aufgabe);
+                }
+            }
+            catch
+            {
+                await _jsRuntime.InvokeVoidAsync("localStorage.removeItem", "todos");
+            }
+        }
+        await base.OnAfterRenderAsync(firstRender);
+        StateHasChanged();
+    }
+
+    void aktualisiere(Aufgabe a)
+    {
+        a.Bearbeiten = false;
+        aktualisiere();
+    }
+
+    void aktualisiere()
+    {
+
+        var daten = JsonSerializer.Serialize(Aufgaben, typeof(List<Aufgabe>));
+
+        _jsRuntime.InvokeVoidAsync("localStorage.setItem", "todos", daten);
+    }
+
+    void neue()
+    {
+        Aufgaben.Add(new Aufgabe
+        {
+            Erledigt = neuAufgabe.Erledigt,
+            Text = neuAufgabe.Text,
+            ID = Aufgaben.Count()
+        });
+
+        aktualisiere();
+    }
+}

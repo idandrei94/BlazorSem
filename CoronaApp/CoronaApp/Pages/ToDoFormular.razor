@@ -1,0 +1,71 @@
+﻿@page "/Formular/{ID:int}"
+
+@using  Data
+
+@inject Services.ITaskService _taskService
+@inject IJSRuntime _jsRuntime
+
+<h3>ToDoFormular</h3>
+<EditForm Model="MyAufgabe" OnValidSubmit="SpeichernAsync">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <div class="form-group">
+        <label for="">Aufgabe</label>
+        <InputText @bind-Value="MyAufgabe.Text" class="form-control" placeholder="Aufgaben tippen"></InputText>
+        <ValidationMessage For="@(() => MyAufgabe.Text)"></ValidationMessage>
+    </div>
+    <div class="form-group">
+        <label for="">AufBis wanngabe</label>
+        <InputDate @bind-Value="MyAufgabe.ErledigtBis" class="form-control" placeholder="Datum eingeben"></InputDate>
+        <ValidationMessage For="@(() => MyAufgabe.ErledigtBis)"></ValidationMessage>
+    </div>
+    <button type="submit">Speichern</button>
+    <ValidationSummary></ValidationSummary>
+</EditForm>
+
+<ul class="list-group">
+    @foreach (var item in Aufgaben)
+    {
+        <li @key="item.ID" class="list-group-item">
+            @if (item.Bearbeiten)
+            {
+                <input @bind="item.Text" @onfocusout='_ => aktualisiere(item)' />
+            }
+            <input type="checkbox" @bind="item.Erledigt" @onfocusout="_ => aktualisiere(item)" />
+            <span style='@(item.Erledigt ? "text-decoration:line-through" : "")' @onclick="_ => item.Bearbeiten = true">@item.Text @item.ErledigtBis</span>
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public int ID { get; set; }
+    public Aufgabe MyAufgabe { get; set; } = new Aufgabe();
+    public IEnumerable<Aufgabe> Aufgaben { get; set; } = new List<Aufgabe>();
+
+
+    async Task SpeichernAsync()
+    {
+        await _taskService.Add(MyAufgabe);
+        MyAufgabe = new Aufgabe();
+        await aktualisiere();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await aktualisiere();
+    }
+
+    async Task aktualisiere(Aufgabe a)
+    {
+        a.Bearbeiten = false;
+        await _taskService.Update(a);
+        await aktualisiere();
+    }
+
+    async Task aktualisiere()
+    {
+        Aufgaben = await _taskService.GetAll();
+        StateHasChanged();
+    }
+}

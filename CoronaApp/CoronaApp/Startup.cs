@@ -10,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CoronaApp.Data;
+using CoronaApp.Data.Persistence;
+using Microsoft.EntityFrameworkCore;
+using CoronaApp.Services;
 
 namespace CoronaApp
 {
@@ -28,7 +31,14 @@ namespace CoronaApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+
             services.AddSingleton<WeatherForecastService>();
+            services.AddTransient<ITaskService, TaskService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
